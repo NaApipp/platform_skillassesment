@@ -1,4 +1,5 @@
-import { GraduationCap, ClipboardList, Grid2X2, SquareArrowRightExit } from "lucide-react";
+import { GraduationCap, ClipboardList, Grid2X2, SquareArrowRightExit, UserStar } from "lucide-react";
+import Link from "next/link";
 
 export default function Sidebar() {
   return (
@@ -70,29 +71,30 @@ export default function Sidebar() {
             </li>
           </ul>
         </div>
-
+        {/* Direct Login Dashboard */}
         <div className="sticky inset-x-0 bottom-0 border-t border-gray-100 dark:border-gray-800">
-          <a
-            href="#"
+          <Link
+            href="/login-dashboard"
             className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800"
           >
-            <img
-              alt=""
-              src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-              className="size-10 rounded-full object-cover"
+            <UserStar
+              className="size-5 text-gray-700 dark:text-gray-200"
+              strokeWidth={2}
+              stroke="currentColor"
+              fill="none"
             />
 
             <div>
               <p className="text-xs">
                 <strong className="block font-medium text-gray-900 dark:text-white">
                   {" "}
-                  Eric Frusciante{" "}
+                  Login Dashboard{" "}
                 </strong>
 
-                <span> eric@frusciante.com </span>
+                <span> klik untuk login </span>
               </p>
             </div>
-          </a>
+          </Link>
         </div>
       </div>
     </>
