@@ -15,5 +15,5 @@ export const USERS: DemoUser[] = [
   { username: "user_testing7", password: "Testing7#", role: "user" },
   { username: "user_testing8", password: "Testing8#", role: "user" },
   { username: "user_testing9", password: "Testing9#", role: "user" },
-  { username: "user_testing10 ", password: "testing10#", role: "user" },
+  { username: "user_testing10", password: "Testing10#", role: "user" },
 ];
