@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { authStorageKeys } from "../(admin)/authProvider";
 import { useRouter } from "next/navigation";
+import { Lock, TriangleAlert } from "lucide-react";
 
 export default function LoginDashboard() {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,29 +45,17 @@ export default function LoginDashboard() {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-4 py-12">
+      <div className="min-h-screen bg-[#FBF9F9] flex items-center justify-center px-4 py-12">
         <div className="max-w-md w-full">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+          <div className="bg-white  rounded-2xl shadow-lg p-8">
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-lime-100 dark:bg-lime-900/40 rounded-xl mb-4">
-                <svg
-                  className="w-6 h-6 text-lime-600 dark:text-lime-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                  />
-                </svg>
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-[#008ED3] rounded-full mb-4">
+                <Lock className="text-white" size={26} />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+              <h2 className="text-2xl font-bold text-[#111827]">
                 Welcome back
               </h2>
-              <p className="text-gray-600 dark:text-gray-400 mt-2">
+              <p className="text-[#6B7280]">
                 Sign in to your account
               </p>
             </div>
@@ -75,9 +64,9 @@ export default function LoginDashboard() {
               <div>
                 <label
                   htmlFor="username"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                  className="block text-sm font-medium text-[#374151] mb-2"
                 >
-                  Email address
+                  Username
                 </label>
                 <input
                   type="text"
@@ -86,7 +75,9 @@ export default function LoginDashboard() {
                   autoComplete="username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-lime-500 dark:focus:ring-lime-400 focus:border-lime-500 dark:focus:border-lime-400 outline-none transition-colors text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                  className="w-full px-4 py-3 bg-white border border-[#D1D5DB] rounded-lg focus:ring-2 focus-[#008ED3] 
+                            focus:border-[#008ED3] outline-none transition-colors text-[#374151]
+                            placeholder-[#9CA3AF]"
                   placeholder="username"
                 />
               </div>
@@ -95,14 +86,14 @@ export default function LoginDashboard() {
                 <div className="flex items-center justify-between mb-2">
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                    className="block text-sm font-medium text-[#374151]"
                   >
                     Password
                   </label>
                   <button
                     type="button"
                     onClick={() => setIsOpen(true)}
-                    className="text-sm font-medium text-lime-600 dark:text-lime-400 hover:text-lime-500 dark:hover:text-lime-300"
+                    className="text-sm font-medium text-[#008ED3] hover:text-[#008ED3]/80"
                   >
                     Forgot password?
                   </button>
@@ -112,7 +103,9 @@ export default function LoginDashboard() {
                   name="password"
                   type="password"
                   autoComplete="current-password"
-                  className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-lime-500 dark:focus:ring-lime-400 focus:border-lime-500 dark:focus:border-lime-400 outline-none transition-colors text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                  className="w-full px-4 py-3 bg-white border border-[#D1D5DB] rounded-lg focus:ring-2 focus-[#008ED3] 
+                            focus:border-[#008ED3] outline-none transition-colors text-[#374151]
+                            placeholder-[#9CA3AF]"
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -121,17 +114,17 @@ export default function LoginDashboard() {
 
               <button
                 type="submit"
-                className="w-full bg-lime-600 dark:bg-lime-300 text-white dark:text-gray-900 py-3 px-4 rounded-lg font-medium hover:bg-lime-700 dark:hover:bg-lime-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-500 dark:focus:ring-offset-gray-800 transition-colors"
+                className="w-full bg-[#008ED3] text-white py-3 px-4 rounded-lg font-bold hover:bg-[#008ED3]/80 transition-colors cursor-pointer"
               >
                 Masuk
               </button>
             </form>
 
-            <p className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
+            <p className="mt-8 text-center text-sm text-[#4B5563]">
               Kembali ke halaman utama?
               <Link
                 href="/dashboard"
-                className="font-medium text-lime-600 dark:text-lime-400 hover:text-lime-500 dark:hover:text-lime-300 ml-2"
+                className="font-bold text-[#008ED3] hover:text-[#008ED3]/80 ml-2"
               >
                 Halaman Utama
               </Link>
@@ -147,35 +140,23 @@ export default function LoginDashboard() {
               className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
               onClick={() => setIsOpen(false)}
             />
-            <div className="relative w-full max-w-sm bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-800 p-6">
+            <div className="relative w-full max-w-sm bg-white rounded-2xl shadow-xl border border-gray-200 p-6">
               <div className="flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 flex items-center justify-center mb-4 ring-4 ring-red-50 dark:ring-red-900/10">
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                    ></path>
-                  </svg>
+                <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-4 ring-4 ring-red-50">
+                  <TriangleAlert size={24} />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
-                  Delete Account
+                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                  Lupa Password
                 </h3>
-                <p className="text-gray-500 dark:text-gray-400 text-sm mb-6">
-                  Are you sure you want to delete your account? This action
-                  cannot be undone and all data will be lost.
+                <p className="text-gray-500 text-sm mb-6 text-center">
+                  Untuk saat ini fitur reset password mandiri belum tersedia. 
+                  Silakan hubungi developer (IG: @n_apipppp) untuk bantuan reset password.
                 </p>
               </div>
               <div className="flex gap-3 w-full">
                 <button
                 onClick={() => setIsOpen(false)}
-                className="flex-1 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                className="flex-1 py-2.5 bg-[#008ED3] text-white py-3 px-4 rounded-lg font-bold hover:bg-[#008ED3]/80 transition-colors cursor-pointer">
                   Mengerti
                 </button>
               </div>
