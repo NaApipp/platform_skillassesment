@@ -304,26 +304,33 @@ export default function Page() {
   const progressPercentage = ((currentStep - 1) / (steps.length - 1)) * 100;
 
   return (
-    <div className="min-h-screen py-6 px-4">
+    <div className="min-h-screen py-6 px-4 bg-[#F0F4F8]">
       {/* Title */}
-      <div className="max-w-3xl mx-auto mb-8 text-center sm:text-left">
-        <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white flex items-center justify-center sm:justify-start gap-3">
-          <Award className="w-8 h-8 text-lime-500 animate-pulse" />
-          Platform Asesmen Skill SI
-        </h1>
-        <p className="mt-2 text-gray-500 dark:text-gray-400">
+      <div className="flex flex-col items-center max-w-3xl mx-auto mb-6 text-center">
+        <div className="flex items-center gap-3 mb-1">
+          <Award className="w-8 h-8 text-white bg-[#F58220] p-1 rounded-lg" />
+          <h1 className="text-2xl font-extrabold tracking-tight text-[#003366]">
+            Platform Asesmen Skill SI
+          </h1>
+        </div>
+        <p className="text-sm text-[#6B7280]">
           Ukur kecenderungan kompetensi Anda di bidang Sistem Informasi: Bisnis vs Teknologi.
         </p>
       </div>
 
       {/* Stepper Layout */}
-      <div className="w-full px-4 py-8 max-w-3xl mx-auto bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-xl mb-6">
-        <div className="relative flex items-center justify-between w-full">
-          {/* Progress Bar Line */}
-          <div className="absolute left-0 right-0 top-5 transform -translate-y-1/2 h-1 bg-gray-100 dark:bg-gray-800 rounded-full z-0"></div>
-          <div 
-            className="absolute left-0 top-5 transform -translate-y-1/2 h-1 bg-lime-500 rounded-full transition-all duration-500 ease-in-out z-0"
-            style={{ width: `${progressPercentage}%` }}
+      <div className="w-full px-8 py-6 max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 mb-4">
+        <div className="relative flex items-start justify-between w-full">
+          {/* Progress Bar Line - positioned behind circles */}
+          <div className="absolute left-0 right-0 top-5 h-[2px] bg-gray-200 z-0"
+            style={{ left: '12.5%', right: '12.5%' }}
+          ></div>
+          <div
+            className="absolute top-5 h-[2px] bg-[#1A73E8] transition-all duration-500 ease-in-out z-0"
+            style={{
+              left: '12.5%',
+              width: `${progressPercentage * 0.75}%`
+            }}
           ></div>
 
           {/* Steps Indicators */}
@@ -333,37 +340,41 @@ export default function Page() {
             const isSelectable = (step.id <= currentStep || isCompleted) && currentStep !== 4;
 
             return (
-              <div 
-                key={step.id} 
+              <div
+                key={step.id}
                 onClick={() => isSelectable && handleStepClick(step.id)}
-                className={`flex flex-col items-center relative z-10 w-1/4 ${isSelectable ? "cursor-pointer group" : "cursor-not-allowed"}`}
+                className={`flex flex-col items-center relative z-10 w-1/4 ${
+                  isSelectable ? "cursor-pointer" : "cursor-default"
+                }`}
               >
-                <div 
-                  className={`w-10 h-10 rounded-full border-4 flex items-center justify-center shadow-md transition-all duration-300 ${
-                    isCompleted 
-                      ? "bg-lime-500 border-white dark:border-gray-900 text-gray-950 scale-100" 
+                <div
+                  className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                    isCompleted
+                      ? "bg-[#1A73E8] border-[#1A73E8] text-white"
                       : isActive
-                        ? "bg-gray-900 dark:bg-white border-lime-500 text-white dark:text-gray-900 scale-110 ring-4 ring-lime-100 dark:ring-lime-900/40"
-                        : "bg-white dark:bg-gray-850 border-gray-100 dark:border-gray-805 text-gray-450 dark:text-gray-500"
+                      ? "bg-white border-[#F58220] text-[#F58220]"
+                      : "bg-white border-gray-300 text-gray-400"
                   }`}
                 >
                   {isCompleted ? (
-                    <Check className="w-5 h-5 stroke-[3]" />
+                    <Check className="w-5 h-5 stroke-[2.5]" />
                   ) : (
                     <span className="text-sm font-bold">{step.id}</span>
                   )}
                 </div>
-                <div className="mt-3 text-center">
-                  <span className={`block text-xs sm:text-sm font-bold transition-colors duration-200 ${
-                    isActive 
-                      ? "text-lime-600 dark:text-lime-400" 
-                      : isCompleted 
-                        ? "text-gray-800 dark:text-gray-200" 
-                        : "text-gray-400 dark:text-gray-500"
-                  }`}>
+                <div className="mt-2 text-center">
+                  <span
+                    className={`block text-xs font-bold transition-colors duration-200 ${
+                      isActive
+                        ? "text-[#1A73E8]"
+                        : isCompleted
+                        ? "text-gray-700"
+                        : "text-gray-400"
+                    }`}
+                  >
                     {step.label}
                   </span>
-                  <span className="hidden sm:block text-[10px] text-gray-400 dark:text-gray-500 font-medium">
+                  <span className="hidden sm:block text-[10px] text-gray-400 font-normal">
                     {step.desc}
                   </span>
                 </div>
@@ -374,22 +385,22 @@ export default function Page() {
       </div>
 
       {/* Form Content */}
-      <div className="w-full max-w-3xl mx-auto bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-xl overflow-hidden transition-all duration-300">
-        <div className="p-6 sm:p-10">
-          
+      <div className="w-full max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300">
+        <div className="p-8">
+
           {/* Step 1: Identitas */}
           {currentStep === 1 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
               <div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">Identitas Mahasiswa</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Silakan masukkan data diri Anda terlebih dahulu untuk memulai asesmen.</p>
+                <h3 className="text-2xl font-bold text-gray-900">Identitas Mahasiswa</h3>
+                <p className="text-sm text-gray-500 mt-1">Silakan masukkan data diri Anda terlebih dahulu untuk memulai asesmen.</p>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {/* Full Name */}
                 <div className="space-y-1.5">
-                  <label htmlFor="fullName" className="text-sm font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                    <User className="w-4 h-4 text-lime-500" /> Nama Lengkap
+                  <label htmlFor="fullName" className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                    <User className="w-4 h-4 text-[#1A73E8]" /> Nama Lengkap
                   </label>
                   <input
                     type="text"
@@ -398,19 +409,19 @@ export default function Page() {
                     value={formData.fullName}
                     onChange={handleInputChange}
                     placeholder="Masukkan nama lengkap Anda"
-                    className={`w-full px-4 py-3 rounded-xl border outline-none transition duration-200 bg-gray-50/50 dark:bg-gray-850 text-gray-900 dark:text-white ${
-                      errors.fullName 
-                        ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-100 dark:focus:ring-red-950" 
-                        : "border-gray-250 dark:border-gray-750 focus:border-lime-500 focus:ring-2 focus:ring-lime-100 dark:focus:ring-lime-950"
+                    className={`w-full px-4 py-3 rounded-lg border outline-none transition duration-200 text-gray-900 text-sm ${
+                      errors.fullName
+                        ? "border-red-400 bg-red-50 focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                        : "border-gray-300 bg-white focus:border-[#1A73E8] focus:ring-2 focus:ring-blue-100"
                     }`}
                   />
-                  {errors.fullName && <p className="text-xs text-red-500 font-semibold">{errors.fullName}</p>}
+                  {errors.fullName && <p className="text-xs text-red-500 font-medium">{errors.fullName}</p>}
                 </div>
 
                 {/* NIM */}
                 <div className="space-y-1.5">
-                  <label htmlFor="nim" className="text-sm font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                    <ClipboardList className="w-4 h-4 text-lime-500" /> NIM (Nomor Induk Mahasiswa)
+                  <label htmlFor="nim" className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                    <ClipboardList className="w-4 h-4 text-[#1A73E8]" /> NIM (Nomor Induk Mahasiswa)
                   </label>
                   <input
                     type="text"
@@ -419,13 +430,13 @@ export default function Page() {
                     value={formData.nim}
                     onChange={handleInputChange}
                     placeholder="Masukkan NIM Anda (contoh: 1202220101)"
-                    className={`w-full px-4 py-3 rounded-xl border outline-none transition duration-200 bg-gray-50/50 dark:bg-gray-850 text-gray-900 dark:text-white ${
-                      errors.nim 
-                        ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-100 dark:focus:ring-red-950" 
-                        : "border-gray-250 dark:border-gray-750 focus:border-lime-500 focus:ring-2 focus:ring-lime-100 dark:focus:ring-lime-950"
+                    className={`w-full px-4 py-3 rounded-lg border outline-none transition duration-200 text-gray-900 text-sm ${
+                      errors.nim
+                        ? "border-red-400 bg-red-50 focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                        : "border-gray-300 bg-white focus:border-[#1A73E8] focus:ring-2 focus:ring-blue-100"
                     }`}
                   />
-                  {errors.nim && <p className="text-xs text-red-500 font-semibold">{errors.nim}</p>}
+                  {errors.nim && <p className="text-xs text-red-500 font-medium">{errors.nim}</p>}
                 </div>
               </div>
             </div>
@@ -436,25 +447,25 @@ export default function Page() {
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
               <div className="flex justify-between items-start gap-4">
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">Kuesioner Minat & Bakat</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Jawablah pertanyaan di bawah ini sesuai dengan kepribadian Anda.</p>
+                  <h3 className="text-2xl font-bold text-gray-900">Kuesioner Minat & Bakat</h3>
+                  <p className="text-sm text-gray-500 mt-1">Jawablah pertanyaan di bawah ini sesuai dengan kepribadian Anda.</p>
                 </div>
-                <div className="px-3 py-1 bg-lime-100 dark:bg-lime-950/40 text-lime-700 dark:text-lime-400 rounded-full font-bold text-xs shrink-0 select-none">
+                <div className="px-3 py-1 bg-blue-50 text-[#1A73E8] rounded-full font-bold text-xs shrink-0 select-none">
                   Pertanyaan {activeQuestionIndex + 1}/10
                 </div>
               </div>
 
               {/* Sub-Progress Bar */}
-              <div className="w-full bg-gray-100 dark:bg-gray-800 h-1.5 rounded-full overflow-hidden">
+              <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
                 <div 
-                  className="bg-lime-500 h-full transition-all duration-300"
+                  className="bg-[#1A73E8] h-full transition-all duration-300"
                   style={{ width: `${((activeQuestionIndex + 1) / questionsSeed.length) * 100}%` }}
                 ></div>
               </div>
 
               {/* Question Text */}
-              <div className="p-5 bg-lime-50/10 dark:bg-lime-950/5 border border-lime-100/20 dark:border-lime-900/10 rounded-2xl">
-                <h4 className="text-lg font-bold text-gray-900 dark:text-white leading-relaxed">
+              <div className="p-5 bg-blue-50/50 border border-blue-100 rounded-2xl">
+                <h4 className="text-lg font-bold text-gray-900 leading-relaxed">
                   {questionsSeed[activeQuestionIndex].pertanyaan}
                 </h4>
               </div>
@@ -467,24 +478,24 @@ export default function Page() {
                     <button
                       key={idx}
                       onClick={() => handleSelectOption(activeQuestionIndex, idx)}
-                      className={`w-full text-left p-4 rounded-2xl border-2 transition-all duration-200 cursor-pointer flex items-center gap-4 ${
+                      className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer flex items-center gap-4 ${
                         isSelected
-                          ? "border-lime-500 bg-lime-50/20 dark:bg-lime-950/10 shadow-md scale-[1.01]"
-                          : "border-gray-150 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50/50 dark:hover:bg-gray-850"
+                          ? "border-[#1A73E8] bg-blue-50/30 shadow-sm"
+                          : "border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50"
                       }`}
                     >
-                      <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 border transition-all duration-200 ${
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm shrink-0 border transition-all duration-200 ${
                         isSelected
-                          ? "bg-lime-500 border-lime-500 text-gray-950"
-                          : "bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400"
+                          ? "bg-[#1A73E8] border-[#1A73E8] text-white"
+                          : "bg-gray-50 border-gray-200 text-gray-600"
                       }`}>
                         {OPTION_LABELS[idx]}
                       </div>
-                      <span className={`text-sm font-medium ${isSelected ? "text-gray-900 dark:text-white font-bold" : "text-gray-700 dark:text-gray-300"}`}>
+                      <span className={`text-sm ${isSelected ? "text-gray-900 font-bold" : "text-gray-700 font-medium"}`}>
                         {opt.teks}
                       </span>
                       {isSelected && (
-                        <div className="ml-auto w-5 h-5 bg-lime-500 rounded-full flex items-center justify-center text-gray-950 shrink-0">
+                        <div className="ml-auto w-5 h-5 bg-[#1A73E8] rounded-full flex items-center justify-center text-white shrink-0">
                           <Check className="w-3.5 h-3.5 stroke-[3]" />
                         </div>
                       )}
@@ -504,10 +515,10 @@ export default function Page() {
                   type="button"
                   onClick={() => setActiveQuestionIndex(prev => Math.max(0, prev - 1))}
                   disabled={activeQuestionIndex === 0}
-                  className={`px-4 py-2 rounded-xl border text-xs font-bold flex items-center gap-1 transition-all duration-200 ${
+                  className={`px-4 py-2 rounded-lg border text-xs font-semibold flex items-center gap-1 transition-all duration-200 ${
                     activeQuestionIndex === 0
-                      ? "opacity-30 cursor-not-allowed border-gray-200 dark:border-gray-800 text-gray-400"
-                      : "border-gray-250 dark:border-gray-750 text-gray-750 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
+                      ? "opacity-40 cursor-not-allowed border-gray-200 text-gray-400 bg-white"
+                      : "border-gray-300 text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
                   }`}
                 >
                   <ChevronLeft className="w-4 h-4" /> Soal Sebelumnya
@@ -520,10 +531,10 @@ export default function Page() {
                       onClick={() => setActiveQuestionIndex(idx)}
                       className={`w-2.5 h-2.5 rounded-full transition-all duration-200 ${
                         idx === activeQuestionIndex
-                          ? "bg-lime-500 w-5"
+                          ? "bg-[#1A73E8] w-5"
                           : answers[idx] !== undefined
-                            ? "bg-lime-300 dark:bg-lime-800/80"
-                            : "bg-gray-200 dark:bg-gray-800"
+                            ? "bg-blue-300"
+                            : "bg-gray-200"
                       }`}
                     ></button>
                   ))}
@@ -533,10 +544,10 @@ export default function Page() {
                   type="button"
                   onClick={() => setActiveQuestionIndex(prev => Math.min(questionsSeed.length - 1, prev + 1))}
                   disabled={activeQuestionIndex === questionsSeed.length - 1}
-                  className={`px-4 py-2 rounded-xl border text-xs font-bold flex items-center gap-1 transition-all duration-200 ${
+                  className={`px-4 py-2 rounded-lg border text-xs font-semibold flex items-center gap-1 transition-all duration-200 ${
                     activeQuestionIndex === questionsSeed.length - 1
-                      ? "opacity-30 cursor-not-allowed border-gray-200 dark:border-gray-800 text-gray-400"
-                      : "border-gray-250 dark:border-gray-750 text-gray-750 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
+                      ? "opacity-40 cursor-not-allowed border-gray-200 text-gray-400 bg-white"
+                      : "border-gray-300 text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
                   }`}
                 >
                   Soal Berikutnya <ChevronRight className="w-4 h-4" />
@@ -549,32 +560,32 @@ export default function Page() {
           {currentStep === 3 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
               <div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">Tinjau Jawaban Asesmen</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Pastikan semua data identitas dan kuesioner terisi dengan benar sebelum mengirim.</p>
+                <h3 className="text-2xl font-bold text-gray-900">Tinjau Jawaban Asesmen</h3>
+                <p className="text-sm text-gray-500 mt-1">Pastikan semua data identitas dan kuesioner terisi dengan benar sebelum mengirim.</p>
               </div>
 
               {/* Student info overview */}
-              <div className="p-5 rounded-2xl border border-gray-150 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-5 rounded-xl border border-gray-200 bg-gray-50 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <span className="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-wider block">Nama Lengkap</span>
-                  <span className="font-bold text-gray-800 dark:text-white text-base">{formData.fullName}</span>
+                  <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">Nama Lengkap</span>
+                  <span className="font-bold text-gray-800 text-base">{formData.fullName}</span>
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-wider block">NIM</span>
-                  <span className="font-bold text-gray-800 dark:text-white text-base">{formData.nim}</span>
+                  <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">NIM</span>
+                  <span className="font-bold text-gray-800 text-base">{formData.nim}</span>
                 </div>
               </div>
 
               {/* Questionnaire status */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-bold text-gray-800 dark:text-gray-200">Daftar Jawaban Anda</span>
-                  <span className="text-xs font-bold text-lime-600 dark:text-lime-400">
+                  <span className="text-sm font-bold text-gray-800">Daftar Jawaban Anda</span>
+                  <span className="text-xs font-bold text-[#1A73E8]">
                     {Object.keys(answers).length}/{questionsSeed.length} Terjawab
                   </span>
                 </div>
 
-                <div className="max-h-[300px] overflow-y-auto border border-gray-150 dark:border-gray-800 rounded-2xl divide-y divide-gray-150 dark:divide-gray-800">
+                <div className="max-h-[300px] overflow-y-auto border border-gray-200 rounded-xl divide-y divide-gray-100">
                   {questionsSeed.map((q, idx) => {
                     const answeredOpt = answers[idx];
                     const isAnswered = answeredOpt !== undefined;
@@ -586,22 +597,22 @@ export default function Page() {
                           setActiveQuestionIndex(idx);
                           setCurrentStep(2);
                         }}
-                        className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-2 hover:bg-gray-50 dark:hover:bg-gray-850 cursor-pointer transition"
+                        className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-2 hover:bg-gray-50 cursor-pointer transition"
                       >
                         <div className="space-y-1 max-w-xl">
-                          <h5 className="text-xs font-bold text-gray-400 dark:text-gray-500">Soal {idx + 1}</h5>
-                          <p className="text-sm font-bold text-gray-800 dark:text-gray-200 line-clamp-1">{q.pertanyaan}</p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-1">
+                          <h5 className="text-xs font-bold text-gray-500">Soal {idx + 1}</h5>
+                          <p className="text-sm font-bold text-gray-800 line-clamp-1">{q.pertanyaan}</p>
+                          <p className="text-xs text-gray-500 line-clamp-1">
                             {isAnswered ? `Pilihan: ${OPTION_LABELS[answeredOpt]}. ${q.options[answeredOpt].teks}` : "Belum dijawab"}
                           </p>
                         </div>
                         <div className="shrink-0 flex items-center">
                           {isAnswered ? (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-lime-100 dark:bg-lime-950/30 text-lime-700 dark:text-lime-400">
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-[#1A73E8]">
                               <CheckCircle2 className="w-3.5 h-3.5" /> Terjawab
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 dark:bg-red-950/30 text-red-700 dark:text-red-400">
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-600">
                               Belum Dijawab
                             </span>
                           )}
@@ -617,8 +628,8 @@ export default function Page() {
               )}
 
               {/* Integrity Checklist */}
-              <div className="space-y-2 pt-2 border-t border-gray-100 dark:border-gray-800">
-                <div className="p-4 rounded-2xl border border-gray-150 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50 flex items-start gap-3">
+              <div className="space-y-2 pt-2 border-t border-gray-100">
+                <div className="p-4 rounded-xl border border-gray-200 bg-gray-50 flex items-start gap-3">
                   <div className="flex items-center h-5">
                     <input
                       id="agreeTerms"
@@ -626,16 +637,16 @@ export default function Page() {
                       type="checkbox"
                       checked={formData.agreeTerms}
                       onChange={handleInputChange}
-                      className={`w-5 h-5 rounded border-gray-300 dark:border-gray-700 text-lime-600 focus:ring-lime-500 bg-white dark:bg-gray-800 cursor-pointer ${
-                        errors.agreeTerms ? "border-red-500 text-red-500 focus:ring-red-400" : ""
+                      className={`w-5 h-5 rounded border-gray-300 text-[#1A73E8] focus:ring-[#1A73E8] bg-white cursor-pointer ${
+                        errors.agreeTerms ? "border-red-500 focus:ring-red-400" : ""
                       }`}
                     />
                   </div>
                   <div className="text-sm">
-                    <label htmlFor="agreeTerms" className="font-bold text-gray-800 dark:text-gray-200 cursor-pointer select-none">
+                    <label htmlFor="agreeTerms" className="font-bold text-gray-800 cursor-pointer select-none">
                       Saya bersedia mematuhi aturan ujian.
                     </label>
-                    <p className="text-gray-500 dark:text-gray-400 text-xs mt-0.5 leading-relaxed">
+                    <p className="text-gray-500 text-xs mt-0.5 leading-relaxed">
                       Saya memahami bahwa asesmen ini dihitung secara rule-based untuk mengukur kecenderungan skill awal secara objektif dan saya telah mengisi seluruh pertanyaan dengan jujur.
                     </p>
                   </div>
@@ -649,70 +660,70 @@ export default function Page() {
           {currentStep === 4 && (
             <div className="space-y-8 animate-in fade-in zoom-in-95 duration-500">
               <div className="text-center">
-                <div className="w-16 h-16 bg-lime-100 dark:bg-lime-950/40 border border-lime-200 dark:border-lime-900/30 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
-                  <CheckCircle2 className="w-9 h-9 text-lime-600 dark:text-lime-400" />
+                <div className="w-16 h-16 bg-blue-50 border border-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+                  <CheckCircle2 className="w-9 h-9 text-[#1A73E8]" />
                 </div>
-                <h3 className="text-2xl font-extrabold text-gray-955 dark:text-white">Asesmen Selesai!</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Berikut adalah analisis kecenderungan skill Sistem Informasi Anda.</p>
+                <h3 className="text-2xl font-extrabold text-gray-900">Asesmen Selesai!</h3>
+                <p className="text-sm text-gray-500 mt-1">Berikut adalah analisis kecenderungan skill Sistem Informasi Anda.</p>
               </div>
 
               {/* Student Overview */}
-              <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/40 flex flex-col sm:flex-row justify-between items-center gap-3 text-sm">
+              <div className="p-4 rounded-xl border border-gray-200 bg-gray-50 flex flex-col sm:flex-row justify-between items-center gap-3 text-sm">
                 <div>
-                  <span className="text-gray-400 dark:text-gray-500 text-xs font-semibold uppercase">Nama Lengkap:</span>
-                  <span className="font-bold text-gray-800 dark:text-white ml-2">{formData.fullName}</span>
+                  <span className="text-gray-500 text-xs font-semibold uppercase">Nama Lengkap:</span>
+                  <span className="font-bold text-gray-800 ml-2">{formData.fullName}</span>
                 </div>
                 <div>
-                  <span className="text-gray-400 dark:text-gray-500 text-xs font-semibold uppercase">NIM:</span>
-                  <span className="font-bold text-gray-800 dark:text-white ml-2">{formData.nim}</span>
+                  <span className="text-gray-500 text-xs font-semibold uppercase">NIM:</span>
+                  <span className="font-bold text-gray-800 ml-2">{formData.nim}</span>
                 </div>
               </div>
 
               {/* Quadrant visualization */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 font-bold text-sm text-gray-800 dark:text-gray-200">
-                  <Target className="w-4 h-4 text-lime-500" /> Visualisasi Kuadran (Bisnis vs Teknologi)
+                <div className="flex items-center gap-2 font-bold text-sm text-gray-800">
+                  <Target className="w-4 h-4 text-[#1A73E8]" /> Visualisasi Kuadran (Bisnis vs Teknologi)
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                   
                   {/* Scatter Plot Visualizer */}
                   <div className="md:col-span-7 flex justify-center">
-                    <div className="relative w-full max-w-[340px] aspect-square border-2 border-gray-205 dark:border-gray-850 rounded-2xl bg-gray-50/20 dark:bg-gray-950/20 p-2 overflow-hidden shadow-inner select-none">
+                    <div className="relative w-full max-w-[340px] aspect-square border-2 border-gray-200 rounded-2xl bg-gray-50 p-2 overflow-hidden shadow-inner select-none">
                       
                       {/* Grid Lines & Axis */}
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-full h-[1.5px] border-t border-dashed border-gray-200 dark:border-gray-800"></div>
+                        <div className="w-full h-[1.5px] border-t border-dashed border-gray-300"></div>
                       </div>
                       <div className="absolute inset-0 flex justify-center">
-                        <div className="h-full w-[1.5px] border-l border-dashed border-gray-200 dark:border-gray-800"></div>
+                        <div className="h-full w-[1.5px] border-l border-dashed border-gray-300"></div>
                       </div>
 
                       {/* Quadrant Names and Background Colors */}
                       <div className="absolute inset-0 grid grid-cols-2 grid-rows-2">
                         {/* Top-Left: Strategis */}
-                        <div className={`flex flex-col items-start justify-start p-3 transition ${scores.kuadran === "Strategis" ? "bg-amber-500/5 dark:bg-amber-500/10" : ""}`}>
-                          <span className={`text-[10px] sm:text-xs font-extrabold uppercase tracking-wider ${scores.kuadran === "Strategis" ? "text-amber-600 dark:text-amber-400" : "text-gray-300 dark:text-gray-600"}`}>Strategis</span>
+                        <div className={`flex flex-col items-start justify-start p-3 transition ${scores.kuadran === "Strategis" ? "bg-amber-50" : ""}`}>
+                          <span className={`text-[10px] sm:text-xs font-extrabold uppercase tracking-wider ${scores.kuadran === "Strategis" ? "text-amber-600" : "text-gray-400"}`}>Strategis</span>
                         </div>
                         {/* Top-Right: Visioner */}
-                        <div className={`flex flex-col items-end justify-start p-3 transition ${scores.kuadran === "Visioner" ? "bg-lime-500/5 dark:bg-lime-500/10" : ""}`}>
-                          <span className={`text-[10px] sm:text-xs font-extrabold uppercase tracking-wider ${scores.kuadran === "Visioner" ? "text-lime-600 dark:text-lime-400" : "text-gray-300 dark:text-gray-600"}`}>Visioner</span>
+                        <div className={`flex flex-col items-end justify-start p-3 transition ${scores.kuadran === "Visioner" ? "bg-green-50" : ""}`}>
+                          <span className={`text-[10px] sm:text-xs font-extrabold uppercase tracking-wider ${scores.kuadran === "Visioner" ? "text-green-600" : "text-gray-400"}`}>Visioner</span>
                         </div>
                         {/* Bottom-Left: Explorer */}
-                        <div className={`flex flex-col items-start justify-end p-3 transition ${scores.kuadran === "Explorer" ? "bg-gray-500/5 dark:bg-gray-500/10" : ""}`}>
-                          <span className={`text-[10px] sm:text-xs font-extrabold uppercase tracking-wider ${scores.kuadran === "Explorer" ? "text-gray-650 dark:text-gray-400" : "text-gray-300 dark:text-gray-600"}`}>Explorer</span>
+                        <div className={`flex flex-col items-start justify-end p-3 transition ${scores.kuadran === "Explorer" ? "bg-gray-100" : ""}`}>
+                          <span className={`text-[10px] sm:text-xs font-extrabold uppercase tracking-wider ${scores.kuadran === "Explorer" ? "text-gray-600" : "text-gray-400"}`}>Explorer</span>
                         </div>
                         {/* Bottom-Right: Teknis */}
-                        <div className={`flex flex-col items-end justify-end p-3 transition ${scores.kuadran === "Teknis" ? "bg-blue-500/5 dark:bg-blue-500/10" : ""}`}>
-                          <span className={`text-[10px] sm:text-xs font-extrabold uppercase tracking-wider ${scores.kuadran === "Teknis" ? "text-blue-600 dark:text-blue-400" : "text-gray-300 dark:text-gray-600"}`}>Teknis</span>
+                        <div className={`flex flex-col items-end justify-end p-3 transition ${scores.kuadran === "Teknis" ? "bg-blue-50" : ""}`}>
+                          <span className={`text-[10px] sm:text-xs font-extrabold uppercase tracking-wider ${scores.kuadran === "Teknis" ? "text-[#1A73E8]" : "text-gray-400"}`}>Teknis</span>
                         </div>
                       </div>
 
                       {/* X & Y Axis Label Info */}
-                      <div className="absolute left-2 top-[52%] -translate-y-1/2 -rotate-90 origin-left text-[8px] font-bold tracking-wider text-gray-400 dark:text-gray-600 uppercase select-none">
+                      <div className="absolute left-2 top-[52%] -translate-y-1/2 -rotate-90 origin-left text-[8px] font-bold tracking-wider text-gray-500 uppercase select-none">
                         Bisnis &uarr;
                       </div>
-                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[8px] font-bold tracking-wider text-gray-400 dark:text-gray-600 uppercase select-none">
+                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[8px] font-bold tracking-wider text-gray-500 uppercase select-none">
                         Teknologi &rarr;
                       </div>
 
@@ -725,20 +736,20 @@ export default function Page() {
                         }}
                       >
                         {/* Pulsing rings */}
-                        <div className="absolute inset-0 bg-lime-500 rounded-full animate-ping opacity-60"></div>
-                        <div className="absolute w-4 h-4 bg-lime-500 dark:bg-lime-400 rounded-full border-2 border-white dark:border-gray-900 shadow-md"></div>
+                        <div className="absolute inset-0 bg-[#F58220] rounded-full animate-ping opacity-60"></div>
+                        <div className="absolute w-4 h-4 bg-[#F58220] rounded-full border-2 border-white shadow-md"></div>
                         {/* Inner tiny dot */}
-                        <div className="w-1.5 h-1.5 bg-gray-950 rounded-full"></div>
+                        <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
 
                         {/* Tooltip Label */}
-                        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-gray-950 dark:bg-gray-850 text-[10px] text-white py-1 px-2 rounded font-bold whitespace-nowrap shadow-md pointer-events-none transition opacity-90">
+                        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-gray-900 text-[10px] text-white py-1 px-2 rounded font-bold whitespace-nowrap shadow-md pointer-events-none transition opacity-90">
                           Tek: {scores.teknologi}%, Bis: {scores.bisnis}%
                         </div>
                       </div>
 
                       {/* Center helper line markers */}
-                      <div className="absolute right-1 top-[46%] text-[8px] text-gray-450 dark:text-gray-600 font-bold select-none">50%</div>
-                      <div className="absolute left-[45%] top-1 text-[8px] text-gray-455 dark:text-gray-600 font-bold select-none">50%</div>
+                      <div className="absolute right-1 top-[46%] text-[8px] text-gray-500 font-bold select-none">50%</div>
+                      <div className="absolute left-[45%] top-1 text-[8px] text-gray-500 font-bold select-none">50%</div>
                     </div>
                   </div>
 
@@ -747,16 +758,16 @@ export default function Page() {
                     {/* Bisnis Score progress */}
                     <div className="space-y-1">
                       <div className="flex justify-between items-center text-sm font-bold">
-                        <span className="text-gray-600 dark:text-gray-400">Kecenderungan Bisnis</span>
+                        <span className="text-gray-700">Kecenderungan Bisnis</span>
                         <span className="text-amber-500">{scores.bisnis}%</span>
                       </div>
-                      <div className="w-full bg-gray-105 dark:bg-gray-800 h-3 rounded-full overflow-hidden">
+                      <div className="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
                         <div 
                           className="bg-gradient-to-r from-amber-400 to-amber-500 h-full rounded-full transition-all duration-1000 ease-out"
                           style={{ width: `${scores.bisnis}%` }}
                         ></div>
                       </div>
-                      <span className="text-[10px] text-gray-400 dark:text-gray-500 block leading-tight">
+                      <span className="text-[10px] text-gray-500 block leading-tight">
                         Mengukur minat pada analisis bisnis, koordinasi proyek, dan perancangan proses organisasi.
                       </span>
                     </div>
@@ -764,16 +775,16 @@ export default function Page() {
                     {/* Teknologi Score progress */}
                     <div className="space-y-1">
                       <div className="flex justify-between items-center text-sm font-bold">
-                        <span className="text-gray-650 dark:text-gray-400">Kecenderungan Teknologi</span>
-                        <span className="text-blue-500">{scores.teknologi}%</span>
+                        <span className="text-gray-700">Kecenderungan Teknologi</span>
+                        <span className="text-[#1A73E8]">{scores.teknologi}%</span>
                       </div>
-                      <div className="w-full bg-gray-105 dark:bg-gray-800 h-3 rounded-full overflow-hidden">
+                      <div className="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
                         <div 
-                          className="bg-gradient-to-r from-blue-400 to-blue-500 h-full rounded-full transition-all duration-1000 ease-out"
+                          className="bg-gradient-to-r from-[#4A90E2] to-[#1A73E8] h-full rounded-full transition-all duration-1000 ease-out"
                           style={{ width: `${scores.teknologi}%` }}
                         ></div>
                       </div>
-                      <span className="text-[10px] text-gray-400 dark:text-gray-500 block leading-tight">
+                      <span className="text-[10px] text-gray-500 block leading-tight">
                         Mengukur ketertarikan pada pemrograman, struktur data, arsitektur database, dan troubleshooting teknis.
                       </span>
                     </div>
@@ -783,42 +794,42 @@ export default function Page() {
               </div>
 
               {/* Explanations */}
-              <div className="p-6 rounded-2xl bg-lime-50/10 dark:bg-lime-950/5 border border-lime-200/20 dark:border-lime-900/10 space-y-2">
-                <h4 className="font-extrabold text-lg text-gray-900 dark:text-white flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-lime-500" />
-                  Anda adalah Tipe: <span className="text-lime-650 dark:text-lime-400">{scores.kuadran}</span>
+              <div className="p-6 rounded-xl bg-blue-50/50 border border-blue-100 space-y-2">
+                <h4 className="font-extrabold text-lg text-gray-900 flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-[#1A73E8]" />
+                  Anda adalah Tipe: <span className="text-[#1A73E8]">{scores.kuadran}</span>
                 </h4>
-                <p className="text-sm text-gray-650 dark:text-gray-350 leading-relaxed">
+                <p className="text-sm text-gray-700 leading-relaxed">
                   {QUADRANT_EXPLANATIONS[scores.kuadran]}
                 </p>
               </div>
 
               {/* Recommendations */}
               <div className="space-y-4 pt-2">
-                <div className="flex items-center gap-2 font-bold text-sm text-gray-800 dark:text-gray-200">
-                  <TrendingUp className="w-4 h-4 text-lime-500" /> Rekomendasi Karier Terkait
+                <div className="flex items-center gap-2 font-bold text-sm text-gray-800">
+                  <TrendingUp className="w-4 h-4 text-[#1A73E8]" /> Rekomendasi Karier Terkait
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {RECOMMENDATIONS[scores.kuadran].map((rec, idx) => (
                     <div 
                       key={idx}
-                      className="p-5 rounded-2xl border border-gray-100 dark:border-gray-850 bg-white dark:bg-gray-900 shadow-sm flex flex-col justify-between gap-3"
+                      className="p-5 rounded-xl border border-gray-200 bg-white shadow-sm flex flex-col justify-between gap-3"
                     >
                       <div className="space-y-1">
                         <div className="flex justify-between items-start gap-2">
-                          <h5 className="font-bold text-base text-gray-900 dark:text-white">{rec.namaKarier}</h5>
+                          <h5 className="font-bold text-base text-gray-900">{rec.namaKarier}</h5>
                           <span className={`px-2 py-0.5 rounded-full text-[9px] font-extrabold select-none ${
                             rec.labelKecocokan === "Sangat Sesuai"
-                              ? "bg-lime-100 dark:bg-lime-950/40 text-lime-700 dark:text-lime-400"
+                              ? "bg-blue-50 text-[#1A73E8]"
                               : rec.labelKecocokan === "Sesuai"
-                                ? "bg-blue-100 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400"
-                                : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
+                                ? "bg-blue-50/50 text-[#1A73E8]"
+                                : "bg-gray-100 text-gray-600"
                           }`}>
                             {rec.labelKecocokan}
                           </span>
                         </div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">{rec.deskripsi}</p>
+                        <p className="text-xs text-gray-500 leading-relaxed">{rec.deskripsi}</p>
                       </div>
                     </div>
                   ))}
@@ -826,16 +837,16 @@ export default function Page() {
               </div>
 
               {/* Result Actions */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4 border-t border-gray-100 dark:border-gray-800">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4 border-t border-gray-100">
                 <button 
                   onClick={resetForm}
-                  className="px-6 py-3 rounded-xl border border-gray-250 dark:border-gray-750 text-gray-700 dark:text-gray-350 font-bold text-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition duration-200 cursor-pointer flex items-center justify-center gap-1.5"
+                  className="px-6 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-semibold text-sm hover:bg-gray-50 transition duration-200 cursor-pointer flex items-center justify-center gap-1.5"
                 >
                   <RefreshCw className="w-4 h-4" /> Ulangi Asesmen
                 </button>
                 <button 
                   onClick={() => window.location.href = "/hasil-saya"}
-                  className="px-6 py-3 rounded-xl bg-lime-500 hover:bg-lime-600 text-gray-950 font-extrabold text-sm transition duration-200 flex items-center justify-center gap-1.5 shadow-lg shadow-lime-500/20 hover:scale-[1.02] cursor-pointer"
+                  className="px-6 py-2.5 rounded-lg bg-[#1A73E8] hover:bg-[#1557B0] text-white font-semibold text-sm transition duration-200 flex items-center justify-center gap-1.5 shadow-md hover:scale-[1.02] cursor-pointer"
                 >
                   Lihat Semua Histori <ArrowRight className="w-4 h-4" />
                 </button>
@@ -847,15 +858,15 @@ export default function Page() {
 
         {/* Footer Navigation Buttons */}
         {currentStep !== 4 && (
-          <div className="px-6 py-5 sm:px-10 bg-gray-50 dark:bg-gray-900/80 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+          <div className="px-8 py-5 bg-white border-t border-gray-100 flex items-center justify-between">
             <button
               type="button"
               onClick={handlePrev}
               disabled={currentStep === 1}
-              className={`px-5 py-2.5 rounded-xl border border-gray-250 dark:border-gray-750 font-bold text-sm flex items-center gap-1.5 transition duration-200 cursor-pointer ${
-                currentStep === 1 
-                  ? "opacity-40 cursor-not-allowed text-gray-400 border-gray-200" 
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+              className={`px-5 py-2.5 rounded-lg border font-semibold text-sm flex items-center gap-1.5 transition duration-200 ${
+                currentStep === 1
+                  ? "opacity-40 cursor-not-allowed text-gray-400 border-gray-200 bg-white"
+                  : "text-gray-700 border-gray-300 bg-white hover:bg-gray-50 cursor-pointer"
               }`}
             >
               <ChevronLeft className="w-4 h-4" /> Kembali
@@ -865,13 +876,13 @@ export default function Page() {
               type="button"
               onClick={handleNext}
               disabled={isSubmitting}
-              className={`px-5 py-2.5 rounded-xl bg-lime-500 hover:bg-lime-600 text-gray-950 font-bold text-sm flex items-center gap-1.5 transition duration-200 hover:scale-[1.02] active:scale-95 shadow-md shadow-lime-500/10 cursor-pointer ${
+              className={`px-6 py-2.5 rounded-lg bg-[#1A73E8] hover:bg-[#1557B0] text-white font-semibold text-sm flex items-center gap-1.5 transition duration-200 active:scale-95 cursor-pointer ${
                 isSubmitting ? "opacity-70 cursor-not-allowed" : ""
               }`}
             >
               {isSubmitting ? (
                 <>
-                  <div className="w-4 h-4 border-2 border-gray-950 border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                   Mengirim...
                 </>
               ) : (

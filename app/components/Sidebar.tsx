@@ -1,84 +1,87 @@
 import { GraduationCap, ClipboardList, Grid2X2, SquareArrowRightExit, UserStar } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Sidebar() {
+  const pathname = usePathname();
+
+  const getLinkStyle = (href: string) => {
+    const isActive = pathname === href;
+    return isActive
+      ? 'flex items-center gap-1 px-4 py-3 rounded-lg bg-[#1a6fa0] border-l-4 border-orange-400'
+      : 'flex items-center gap-1 px-4 py-3 rounded-lg hover:bg-[#1a6fa0]/50 border-l-4 border-transparent';
+  }
   return (
     <>
-      <div className="flex h-screen w-64 flex-col justify-between border-e bg-white dark:border-gray-800 dark:bg-gray-900">
+      <div className="flex h-screen w-64 flex-col justify-between border-e bg-[#008ED3]">
         <div className="px-4 py-6">
           <span className="flex items-center gap-1 ml-4">
             <GraduationCap
-              className="size-7 text-gray-700 dark:text-gray-200"
+              className="size-7 text-white"
               strokeWidth={2}
               stroke="currentColor"
               fill="none"
             />
-            <span className="text-xl tracking-wider font-medium text-gray-700 dark:text-gray-200">
+            <span className="text-xl tracking-wider font-medium text-white">
               Skill<span className="font-extrabold">Sight</span>
             </span>
           </span>
 
           <ul className="mt-6 space-y-1">
             {/* Menu 1 */}
-            <li className="flex items-center gap-1 ml-4">
+            <li>
+              <Link href="/dashboard" className={getLinkStyle('/dashboard')}>
                 <Grid2X2
-                className="size-5 text-gray-700 dark:text-gray-200"
-                strokeWidth={2}
-                stroke="currentColor"
-                fill="none"
+                  className="size-5 text-white"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  fill="none"
                 />
-              <a
-                href="/dashboard"
-                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200"
-              >
-                {" "}
-                Dashboard{" "}
-              </a>
+                <span className="text-sm font-medium text-white">
+                  Dashboard
+                </span>
+              </Link>
             </li>
 
             {/* Menu 2 */}
-            <li className="flex items-center gap-1 ml-4">
+            <li>
+              <Link href="/penilaian-skill" className={getLinkStyle('/penilaian-skill')}>
                 <ClipboardList
-                className="size-5 text-gray-700 dark:text-gray-200"
-                strokeWidth={2}
-                stroke="currentColor"
-                fill="none"
+                  className="size-5 text-white"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  fill="none"
                 />
-              <a
-                href="/penilaian-skill"
-                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-              >
-                {" "}
-                Penilaian Skill{" "}
-              </a>
+                <span className="text-sm font-medium text-white">
+                  Penilaian Skill
+                </span>
+              </Link>
             </li>
             
             {/* Menu 3 */}
-            <li className="flex items-center gap-1 ml-4">
+            <li>
+              <Link href="/hasil-saya" className={getLinkStyle('/hasil-saya')}>
                 <SquareArrowRightExit
-                className="size-5 text-gray-700 dark:text-gray-200"
-                strokeWidth={2}
-                stroke="currentColor"
-                fill="none"
+                  className="size-5 text-white"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  fill="none"
                 />
-              <a
-                href="/hasil-saya"
-                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-              >
-                {" "}
-                Hasil Saya{" "}
-              </a>
+                <span className="text-sm font-medium text-white">
+                  Hasil Saya
+                </span>
+              </Link>
             </li>
           </ul>
         </div>
         {/* Direct Login Dashboard */}
-        <div className="sticky inset-x-0 bottom-0 border-t border-gray-100 dark:border-gray-800">
+        <div className="sticky inset-x-0 bottom-0 border-t border-white">
           <Link
             href="/login-dashboard"
-            className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800"
+            className="flex items-center gap-2 bg-[#008ED3] p-4 hover:bg-[#008ED3]/40 "
           >
             <UserStar
-              className="size-5 text-gray-700 dark:text-gray-200"
+              className="size-5 text-white"
               strokeWidth={2}
               
               stroke="currentColor"
@@ -87,12 +90,12 @@ export default function Sidebar() {
 
             <div>
               <p className="text-xs">
-                <strong className="block font-medium text-gray-900 dark:text-white">
+                <strong className="block font-medium text-white">
                   {" "}
                   Login Dashboard{" "}
                 </strong>
 
-                <span> klik untuk login </span>
+                <span className="text-white"> klik untuk login </span>
               </p>
             </div>
           </Link>

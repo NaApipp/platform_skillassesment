@@ -27,10 +27,10 @@ interface Submission {
 }
 
 const QUADRANT_BADGES: Record<Kuadran, string> = {
-  Visioner: "bg-lime-100 dark:bg-lime-950/40 text-lime-700 dark:text-lime-400 border-lime-200 dark:border-lime-900/30",
-  Strategis: "bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-900/30",
-  Teknis: "bg-blue-100 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-900/30",
-  Explorer: "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700"
+  Visioner:  "bg-[#BBF7D0] text-[#15803D] border-[#DCFCE7]",
+  Strategis: "bg-[#008ED3] text-[#ffff]",
+  Teknis:    "bg-[#F37021] text-[#ffffff]",
+  Explorer:  "bg-[#C3C4C7] text-[#111827] border-[#E5E7EB]"
 };
 
 export default function Page() {
@@ -74,15 +74,15 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen py-6 px-4">
+    <div className="min-h-screen py-6 px-4 bg-[#FBF9F9]">
       {/* Title */}
       <div className="max-w-4xl mx-auto mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white flex items-center gap-3">
-            <ClipboardList className="w-8 h-8 text-lime-500" />
+          <h1 className="text-3xl font-extrabold tracking-tight text-[#111827] flex items-center gap-3">
+            <ClipboardList className="w-8 h-8 text-[#F37021] bg-[#F37021]/10 rounded-lg p-1" />
             Riwayat Asesmen Saya
           </h1>
-          <p className="mt-2 text-gray-500 dark:text-gray-400">
+          <p className="mt-2 text-[#6B7280]">
             Lihat kembali hasil pengukuran minat Bisnis vs Teknologi dari asesmen yang telah Anda lakukan.
           </p>
         </div>
@@ -90,7 +90,7 @@ export default function Page() {
         {submissions.length > 0 && (
           <button
             onClick={handleClearHistory}
-            className="px-4 py-2 text-xs font-bold bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/30 rounded-xl hover:bg-red-100 dark:hover:bg-red-950/40 flex items-center gap-1.5 transition cursor-pointer"
+            className="px-4 py-2 text-xs font-bold text-red-600 bg-red-50 border border-red-600 rounded-xl hover:bg-red-100 flex items-center gap-1.5 transition cursor-pointer"
           >
             <Trash2 className="w-3.5 h-3.5" /> Hapus Riwayat
           </button>
@@ -133,7 +133,7 @@ export default function Page() {
               return (
                 <div 
                   key={sub.id}
-                  className="bg-white dark:bg-gray-900 rounded-3xl border border-gray-150 dark:border-gray-800 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md"
+                  className="bg-white rounded-3xl border border-gray-150 dark:border-gray-800 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md"
                 >
                   {/* Header Row */}
                   <div 
@@ -146,9 +146,9 @@ export default function Page() {
                           <Calendar className="w-3.5 h-3.5" /> {formattedDate}
                         </span>
                       </div>
-                      <h3 className="font-extrabold text-lg text-gray-900 dark:text-white flex flex-wrap items-center gap-x-2 gap-y-1">
-                        <User className="w-4 h-4 text-lime-500 inline shrink-0" /> {sub.nama} 
-                        <span className="text-gray-400 dark:text-gray-600 font-medium text-sm">({sub.nim})</span>
+                      <h3 className="font-extrabold text-lg text-[#111827] flex flex-wrap items-center gap-x-2 gap-y-1">
+                        <User className="w-4 h-4 text-[#008ED3] inline shrink-0" /> {sub.nama} 
+                        <span className="text-[#111827] font-medium text-sm">({sub.nim})</span>
                       </h3>
                     </div>
 
@@ -166,19 +166,19 @@ export default function Page() {
 
                   {/* Expanded Details */}
                   {isExpanded && (
-                    <div className="px-6 pb-6 pt-4 border-t border-gray-100 dark:border-gray-850 bg-gray-50/30 dark:bg-gray-900/30 space-y-6 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="px-6 pb-6 pt-4 border-t border-gray-100 bg-[#FBF9F9] space-y-6 animate-in fade-in slide-in-from-top-2 duration-200">
                       
                       {/* Scores detail row */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Business Score progress */}
                         <div className="space-y-1">
                           <div className="flex justify-between items-center text-xs font-bold">
-                            <span className="text-gray-500">Skor Bisnis</span>
-                            <span className="text-amber-500">{sub.skorBisnis}%</span>
+                            <span className="text-[#6B7280]">Skor Bisnis</span>
+                            <span className="text-[#008ED3]">{sub.skorBisnis}%</span>
                           </div>
-                          <div className="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
+                          <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
                             <div 
-                              className="bg-gradient-to-r from-amber-400 to-amber-500 h-full rounded-full"
+                              className="bg-[#008ED3] h-full rounded-full"
                               style={{ width: `${sub.skorBisnis}%` }}
                             ></div>
                           </div>
@@ -187,12 +187,12 @@ export default function Page() {
                         {/* Technology Score progress */}
                         <div className="space-y-1">
                           <div className="flex justify-between items-center text-xs font-bold">
-                            <span className="text-gray-500">Skor Teknologi</span>
-                            <span className="text-blue-500">{sub.skorTeknologi}%</span>
+                            <span className="text-[#6B7280]">Skor Teknologi</span>
+                            <span className="text-[#F37021]">{sub.skorTeknologi}%</span>
                           </div>
-                          <div className="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
+                          <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
                             <div 
-                              className="bg-gradient-to-r from-blue-400 to-blue-500 h-full rounded-full"
+                              className="bg-[#F37021] h-full rounded-full"
                               style={{ width: `${sub.skorTeknologi}%` }}
                             ></div>
                           </div>
@@ -200,12 +200,12 @@ export default function Page() {
                       </div>
 
                       {/* Diagnostic Analysis Card */}
-                      <div className="p-5 rounded-2xl bg-white dark:bg-gray-850 border border-gray-150 dark:border-gray-800 space-y-2">
-                        <div className="flex items-center gap-2 text-sm font-bold text-gray-850 dark:text-white">
-                          <Award className="w-4 h-4 text-lime-500" /> Analisis Kompetensi
+                      <div className="p-5 rounded-2xl bg-white border border-gray-200 space-y-2 shadow-sm">
+                        <div className="flex items-center gap-2 text-sm font-bold text-[#111827]">
+                          <Award className="w-4 h-4 text-[#F37021]" /> Analisis Kompetensi
                         </div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                          Berdasarkan hasil asesmen, Anda memiliki skor dominan di kuadran <strong className="text-lime-600 dark:text-lime-400">{sub.kuadran}</strong>. Anda cenderung menyukai peran yang melibatkan kolaborasi, {
+                        <p className="text-xs text-[#6B7280] leading-relaxed">
+                          Berdasarkan hasil asesmen, Anda memiliki skor dominan di kuadran <strong className="text-[#111827]">{sub.kuadran}</strong>. Anda cenderung menyukai peran yang melibatkan kolaborasi, {
                             sub.kuadran === "Visioner" 
                               ? "menyelaraskan solusi teknis dengan arah strategis perusahaan secara kreatif."
                               : sub.kuadran === "Strategis"
@@ -225,7 +225,7 @@ export default function Page() {
                             // (We could also just let them redirect to the page, but let's keep it simple)
                             window.location.href = `/penilaian-skill`;
                           }}
-                          className="px-4 py-2 text-xs font-bold bg-lime-500 hover:bg-lime-600 text-gray-950 rounded-xl transition cursor-pointer"
+                          className="px-4 py-2 text-xs font-bold bg-white border border-gray-200 text-[#111827] hover:bg-gray-50 rounded-xl transition cursor-pointer shadow-sm"
                         >
                           Lakukan Tes Lagi
                         </button>
