@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/app/lib/mongodb";
+import z from "zod";
 
 // Format date to "DD/MM/YYYY HH:MM:SS"  For Message Date
 function formatDateWIB(date: Date) {
@@ -24,14 +25,33 @@ function formatDateWIB(date: Date) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { fullname, nim, answers, scores, quadrant, recommendations } = body;
 
-    if (!fullname || !nim) {
+    const identitySchema = z.object({
+      fullname: z
+        .string()
+        .min(1, "Nama lengkap harus diisi")
+        .max(30, "Nama lengkap maksimal 30 karakter")
+        .regex(/^[A-Za-z ]+$/, {
+          message: "Nama tidak boleh mengandung angka atau simbol",
+        }),
+      nim: z
+        .string()
+        .min(1, "NIM harus diisi")
+        .max(12, "NIM maksimal 12 karakter")
+        .refine((val) => /^\+?\d+$/.test(val), {
+          message: "Nomor HP hanya boleh angka",
+        }),
+    });
+
+    const validasiIdentity = identitySchema.safeParse(body);
+    if (!validasiIdentity.success) {
       return NextResponse.json(
-        { errorCode: "BAD_REQUEST", message: "Nama dan NIM wajib diisi" },
-        { status: 400 }
+        { errorCode: "BAD_REQUEST", message: "Validasi gagal" },
+        { status: 400 },
       );
     }
+
+    const { answers, scores, quadrant, recommendations } = body;
 
     const client = await clientPromise;
     const db = client.db(process.env.MONGODB_DB || "platform_assesment");
@@ -41,15 +61,15 @@ export async function POST(request: Request) {
 
     const result = await collection.insertOne({
       identity: {
-        fullname: fullname.trim(),
-        nim: nim.trim(),
+        fullname: validasiIdentity.data.fullname.trim(),
+        nim: validasiIdentity.data.nim.trim(),
       },
       answers: answers || {},
       scores: scores || {},
       quadrant: quadrant || "",
       recommendations: recommendations || [],
       createdAt: new Date(),
-      createdAtWIB: formattedDate
+      createdAtWIB: formattedDate,
     });
 
     return NextResponse.json(
@@ -57,7 +77,7 @@ export async function POST(request: Request) {
         success: true,
         id: result.insertedId,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("POST /api/assesment:", error);
@@ -67,7 +87,7 @@ export async function POST(request: Request) {
         errorCode: "SERVER_ERROR",
         message: "Terjadi kesalahan pada server",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -75,19 +95,23 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const page   = Math.max(1, parseInt(searchParams.get("page")  ?? "1", 10));
-    const limit  = Math.min(100, Math.max(1, parseInt(searchParams.get("limit") ?? "20", 10)));
-    const nim      = searchParams.get("nim")      ?? "";
+    const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10));
+    const limit = Math.min(
+      100,
+      Math.max(1, parseInt(searchParams.get("limit") ?? "20", 10)),
+    );
+    const nim = searchParams.get("nim") ?? "";
     const fullname = searchParams.get("fullname") ?? "";
 
     const client = await clientPromise;
-    const db     = client.db(process.env.MONGODB_DB || "platform_assesment");
+    const db = client.db(process.env.MONGODB_DB || "platform_assesment");
     const collection = db.collection("students_submissions");
 
     // Build filter
     const filter: Record<string, unknown> = {};
-    if (nim)      filter["identity.nim"]      = { $regex: nim,      $options: "i" };
-    if (fullname) filter["identity.fullname"] = { $regex: fullname, $options: "i" };
+    if (nim) filter["identity.nim"] = { $regex: nim, $options: "i" };
+    if (fullname)
+      filter["identity.fullname"] = { $regex: fullname, $options: "i" };
 
     const [total, data] = await Promise.all([
       collection.countDocuments(filter),
@@ -110,13 +134,13 @@ export async function GET(request: Request) {
         },
         data,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("GET /api/assesment:", error);
     return NextResponse.json(
       { errorCode: "SERVER_ERROR", message: "Terjadi kesalahan pada server" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
