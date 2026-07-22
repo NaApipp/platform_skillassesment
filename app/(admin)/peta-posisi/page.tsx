@@ -371,12 +371,12 @@ export default function PetaPosisi() {
   return (
     <div className="min-h-screen text-white">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-6 ">
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">
+          <h1 className="text-2xl font-extrabold text-black tracking-tight">
             Peta Posisi Siswa
           </h1>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <p className="text-sm text-black mt-0.5">
             Visualisasi posisi siswa berdasarkan dimensi Bisnis &amp; Teknologi
           </p>
         </div>
