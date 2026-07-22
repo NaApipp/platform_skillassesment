@@ -133,11 +133,22 @@ export default function Page() {
   const validateStep = (step: number) => {
     const newErrors: Record<string, string> = {};
     if (step === 1) {
-      if (!formData.fullName.trim()) newErrors.fullName = "Nama lengkap wajib diisi";
-      if (!formData.nim.trim()) {
-        newErrors.nim = "NIM wajib diisi";
-      } else if (!/^[a-zA-Z0-9-]{5,20}$/.test(formData.nim.trim())) {
-        newErrors.nim = "NIM tidak valid (5-20 karakter, huruf/angka/tanda hubung)";
+      const fullName = formData.fullName.trim();
+      if (!fullName) {
+        newErrors.fullName = "Nama lengkap harus diisi";
+      } else if (fullName.length > 30) {
+        newErrors.fullName = "Nama lengkap maksimal 30 karakter";
+      } else if (!/^[A-Za-z ]+$/.test(fullName)) {
+        newErrors.fullName = "Nama tidak boleh mengandung angka atau simbol";
+      }
+
+      const nim = formData.nim.trim();
+      if (!nim) {
+        newErrors.nim = "NIM harus diisi";
+      } else if (nim.length > 12) {
+        newErrors.nim = "NIM maksimal 12 karakter";
+      } else if (!/^\+?\d+$/.test(nim)) {
+        newErrors.nim = "NIM hanya boleh angka";
       }
     }
     if (step === 2) {
